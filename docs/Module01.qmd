@@ -1,5 +1,5 @@
 ---
-title: "Workshop01"
+title: "Programming Module Workshops"
 author: "Kylar Duffy"
 format: html
 editor: visual
@@ -88,5 +88,3 @@ scatter_plot <- ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass
        color = "Species")
 scatter_plot
 ```
-
-
