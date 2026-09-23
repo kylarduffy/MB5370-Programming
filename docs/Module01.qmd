@@ -24,3 +24,69 @@ source("../code/Module_01.R") # change the filepath/name if required
 
 source("../code/Module_02.R") # change the filepath/name if required
 ```
+
+```{r}
+#| message: false
+
+#| warning: false
+
+# Execute workshop 3 R script
+
+source("../code/Module_03.R") # change the filepath/name if required#| message: false
+```
+
+# Workshop 04. The Developers Toolbox and AI
+
+# Introduce GitHub Copilot and the chattr package
+
+```{r}
+# Load tidyverse and palmerpenguins libraries
+library(tidyverse)
+library(palmerpenguins)
+```
+
+```{r}
+# Create a ggplot scatter plot using the penguins dataset.
+# Plot bill_length_mm on the x-axis and bill_depth_mm on the y-axis.
+# Colour points by species and use geom_point with size 3.
+# Add a minimal theme and clean labels.
+ggplot(data = penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(title = "Bill Length vs Bill Depth in Penguins",
+       x = "Bill Length (mm)",
+       y = "Bill Depth (mm)",
+       color = "Species")
+```
+
+```{r}
+# Create a boxplot using the penguins dataset.
+# Compare flipper_length_mm across different species faceted by island
+# Using a custom colour palette.
+boxplot <- ggplot(data = penguins, aes(x = species, y = flipper_length_mm, fill = species)) +
+  geom_boxplot() +
+  facet_wrap(~ island) +
+  scale_fill_manual(values = c("darkorange", "steelblue", "forestgreen")) +
+  theme_minimal() +
+  labs(title = "Flipper Length by Species and Island",
+       x = "Species",
+       y = "Flipper Length (mm)",
+       fill = "Species")
+boxplot
+```
+
+```{r}
+# Create a scatter plot mapping body_mass_g against flipper_length_mm
+# Add a linear regression trend line (geom_smooth) for each species
+scatter_plot <- ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(title = "Body Mass vs Flipper Length in Penguins",
+       x = "Flipper Length (mm)",
+       y = "Body Mass (g)",
+       color = "Species")
+scatter_plot
+```
+
+
