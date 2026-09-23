@@ -73,6 +73,12 @@ boxplot <- ggplot(data = penguins, aes(x = species, y = flipper_length_mm, fill 
        y = "Flipper Length (mm)",
        fill = "Species")
 boxplot
+# Remove the grid lines and title and make axis lines black
+boxplot + theme(panel.grid = element_blank(),
+                 plot.title = element_blank(),
+                 axis.line = element_line(color = "black"))
+# Keep everything and add grid lines
+
 ```
 
 ```{r}
@@ -87,4 +93,4 @@ scatter_plot <- ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass
        y = "Body Mass (g)",
        color = "Species")
 scatter_plot
-```
+``` 
