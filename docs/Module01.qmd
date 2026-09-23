@@ -38,7 +38,6 @@ source("../code/Module_03.R") # change the filepath/name if required#| message: 
 # Workshop 04. The Developers Toolbox and AI
 
 # Introduce GitHub Copilot and the chattr package
-
 ```{r}
 # Load tidyverse and palmerpenguins libraries
 library(tidyverse)
@@ -94,3 +93,21 @@ scatter_plot <- ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass
        color = "Species")
 scatter_plot
 ``` 
+
+# chattr (Controversial Workspace Engine)
+# Generating an API Key
+```{r}
+usethis::edit_r_environ()
+```
+
+# Connecting chattr to your model
+# Configure chattr inside my permanent R profile
+```{r}
+usethis::edit_r_profile()
+```
+
+# Launching and Mapping the User Interface
+```{r}
+chattr::chattr_app()
+```
+
