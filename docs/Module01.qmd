@@ -38,6 +38,7 @@ source("../code/Module_03.R") # change the filepath/name if required#| message: 
 # Workshop 04. The Developers Toolbox and AI
 
 # Introduce GitHub Copilot and the chattr package
+
 ```{r}
 # Load tidyverse and palmerpenguins libraries
 library(tidyverse)
@@ -92,22 +93,120 @@ scatter_plot <- ggplot(data = penguins, aes(x = flipper_length_mm, y = body_mass
        y = "Body Mass (g)",
        color = "Species")
 scatter_plot
-``` 
+```
 
 # chattr (Controversial Workspace Engine)
-# Generating an API Key
+
 ```{r}
+# Generating an API Key
 usethis::edit_r_environ()
 ```
 
 # Connecting chattr to your model
-# Configure chattr inside my permanent R profile
+
 ```{r}
+# Configure chattr inside my permanent R profile
 usethis::edit_r_profile()
 ```
 
-# Launching and Mapping the User Interface
 ```{r}
+# Launching and Mapping the User Interface
 chattr::chattr_app()
 ```
 
+```{r}
+library(ggplot2)
+
+data(iris)
+
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point()
+
+# Change axis names to Sepal Length and Sepal Width
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point() +
+  labs(x = "Sepal Length", y = "Sepal Width")
+```
+
+# Conditional Logic - filtering your data
+
+# Base R: if and else
+
+```{r}
+# Simple example: Checking Sea Surface Temperature (SST)
+sst <- 30.2
+if (sst > 29.5) {
+  print("Warning: Marine heatwave threshold exceeded!")
+  } else {
+    print("SST remains within baseline parameters.")
+  } # Round brackets () for logical condition, curly {} for the action if that condition is true
+```
+
+# Tidyverse Alternative: Vectorised Conditionals (dplyr)
+
+```{r}
+# The if_else(condition, true_output, false_output) function evaluates an entire column item-by-item
+# Load tidyverse (if not already loaded)
+library(tidyverse)
+
+# Sample coral data
+coral_monitoring <- tibble(
+    site = c("Site_A", "Site_B", "Site_C"),
+    depth_m = c(12, 35, 8)
+  )
+
+# Classify depth using if_else
+coral_monitoring <- coral_monitoring %>%
+  mutate(zone = if_else(depth_m > 30, "Deep Reef", "Shallow Reef", ))
+# mutate () creates a new columns that are functions of existing variables
+# %>% used to pass the output of one function or object as the first argument into the next function
+```
+
+```{r}
+# case_when(): stacking multiple if-else blocks becomes unreadable so case_when() provides a clean, sequential eval layput using formula tildes
+coral_monitoring <- coral_monitoring %>% 
+  mutate(reef_category = case_when(
+    depth_m < 10  ~ "Lagoon / Flats",
+    depth_m <= 30 ~ "Crest / Slope",
+    depth_m > 30  ~ "Mesophotic / Deep",
+    TRUE          ~ "Unclassified" # Catch-all remainder
+  ))
+```
+
+```{r}
+# write an r script that initialises a tibble named marine_stations containing a column for salinity with values 35, 28, 32 and 12, use the pipe operator (%>%) and mutate() combined with case_when() to create a new column named environment_type, classify values below 15 as "Estuarine", values between 15 and 30 as "Brackish", and values above 30 as "Marine", run script and verify the table structure
+
+marine_stations <- marine_stations %>%
+  mutate(environment_type = case_when(
+    salinity < 15 ~ "Estuarine",
+    salinity >= 15 & salinity <= 30 ~ "Brackish",
+    salinity > 30 ~ "Marine"
+  ))
+```
+
+# Automation - Iterating Efficiency
+
+```{r}
+# Automation means instructing r to repeat a task multiple timeswithout copy pasting. We will cover the foundation (for-loops) and tidyverse workflow (purrr)
+
+# Base R: for-loops
+# a for-loop repeats a code chunk for each element in a designated sequence
+# Classic loop anatomy
+for (year in 2020:2024) {
+  print(paste("Processing climate data for year:", year))
+}
+
+# If we want to track real world data, loops can iterate over file directories
+# Loop across index sequences
+transect_lengths <- c(50, 100, 25, 75)
+for (i in seq_along(transect_lengths)) {
+  print(paste("Transect number", i, "measures", transect_lengths[i], "metres."))
+}
+```
+
+# Tidyverse Alternative: Functional Programming (purrr)
+
+```{r}
+# For loops require you to manage index variables (i) and explicitly set up empty "containers" to store results, which often leads to verbose code and hidden bugs. The tidyverse handles iteration via the purrr package using map functions. 
+
+```
