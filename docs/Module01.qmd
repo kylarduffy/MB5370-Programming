@@ -10,7 +10,7 @@ editor: visual
 
 #| warning: false
 
-# Execute workshop 1 R script
+# Execute Module 1 R script
 
 source("../code/Module_01.R") # change the filepath/name if required
 ```
@@ -20,7 +20,7 @@ source("../code/Module_01.R") # change the filepath/name if required
 
 #| warning: false
 
-# Execute workshop 2 R script
+# Execute Module 2 R script
 
 source("../code/Module_02.R") # change the filepath/name if required
 ```
@@ -30,7 +30,7 @@ source("../code/Module_02.R") # change the filepath/name if required
 
 #| warning: false
 
-# Execute workshop 3 R script
+# Execute Module 3 R script
 
 source("../code/Module_03.R") # change the filepath/name if required#| message: false
 ```
@@ -209,4 +209,42 @@ for (i in seq_along(transect_lengths)) {
 ```{r}
 # For loops require you to manage index variables (i) and explicitly set up empty "containers" to store results, which often leads to verbose code and hidden bugs. The tidyverse handles iteration via the purrr package using map functions. 
 
+# Using a standard for-loop
+site_areas <- c(144, 400, 625)
+results <- numeric(length(site_areas)) # Must build an empty container first
+
+for(i in seq_along(site_areas)) {
+  results[i] <- sqrt(site_areas[i])
+
+# Using the purr equivalent
+library(purrr)
+# Map directly and define your expected output type explicitly
+mapped_results <- map_dbl(site_areas, sqrt)
+
+# Iterate a summary function over split lists of data
+iris %>% 
+  split(.$Species) %>% 
+  map(~summary(.x))
 ```
+
+# Writing Custom Functions
+
+```{r}
+# Function Definition
+calculate_coral_mortality <- function(initial_count, surviving_count) {
+  
+  # Logic safety switch using our conditional tools!
+  if (initial_count <= 0) {
+    stop("Initial count must be greater than zero.")
+  }
+  
+  mortality_rate <- (initial_count - surviving_count) / initial_count
+  return(mortality_rate)
+}
+
+# Utilizing your custom function
+calculate_coral_mortality(initial_count = 120, surviving_count = 84)
+
+```
+
+
